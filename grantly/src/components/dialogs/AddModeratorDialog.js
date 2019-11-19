@@ -91,6 +91,7 @@ const AddModeratorDialog = props => {
               label="Enter email"
               onChange={handleChanges("subject")}
               variant="outlined"
+              className={classes.formField}
             />
             <br />
             <FormControl variant="outlined" className={classes.formControl}>
