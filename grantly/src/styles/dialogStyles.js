@@ -31,7 +31,16 @@ export const dialogStyles = makeStyles(theme => ({
     // paddingBottom: 20,
     paddingRight: 50,
     paddingLeft: 50
+  },
+  formControl: {
+    marginTop: theme.spacing(1),
+    minWidth: 150
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2)
   }
+  // TextField: {
+  // }
 }));
 
 export const editGrantStyles = makeStyles(theme => ({
