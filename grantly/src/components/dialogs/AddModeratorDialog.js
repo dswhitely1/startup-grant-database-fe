@@ -15,12 +15,12 @@ import {
   Select
 } from "@material-ui/core";
 import { dialogStyles } from "../../styles/dialogStyles";
-import { submitSuggestion } from "../../actions/index";
+import { submitRole } from "../../actions/index";
 
 const AddModeratorDialog = props => {
-  const [suggestion, setSuggestion] = React.useState({
+  const [role, setRole] = React.useState({
     subject: "",
-    suggestion: ""
+    role: ""
   });
 
   const [open, setOpen] = React.useState(false);
@@ -33,26 +33,25 @@ const AddModeratorDialog = props => {
 
   const handleClose = () => {
     setOpen(false);
-    setSuggestion("");
+    setRole("");
   };
 
   const handleChanges = name => ({ target: { value } }) => {
-    setSuggestion({
-      ...suggestion,
+    setRole({
+      ...role,
       [name]: value
     });
   };
 
   const handleSubmit = () => {
     const sendObject = {
-      subject: suggestion.subject,
-      suggestion: suggestion.suggestion,
-      grant_id: props.id
+      subject: role.subject,
+      role: role.role
     };
     console.log("OBJECT BEING SENT TO ACTION", sendObject);
     // props.submitSuggestion(sendObject);
     handleClose();
-    setSuggestion("");
+    setRole("");
   };
 
   return (
@@ -98,11 +97,11 @@ const AddModeratorDialog = props => {
               <InputLabel>Role</InputLabel>
               <Select
                 native
-                // value={state.age}
-                // onChange={handleChange("role")}
+                value={role.role}
+                onChange={handleChanges("Roles")}
                 inputProps={{
-                  name: "Role",
-                  id: "outlined-age-native-simple"
+                  name: "Roles",
+                  id: "userRole"
                 }}
               >
                 <option value="" />
@@ -142,4 +141,5 @@ const AddModeratorDialog = props => {
   );
 };
 
-export default connect(null, { submitSuggestion })(AddModeratorDialog);
+// export default connect(null, { submitRole })(AddModeratorDialog);
+export default AddModeratorDialog;
