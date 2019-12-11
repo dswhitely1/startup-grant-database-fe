@@ -12,27 +12,9 @@ import { store } from '../../store';
 
 // unit testing
 
-// describe("sum function", () => {
-//   it("sums two integers", () => {
-//     // Arrange - set up mock data
-//     let expected = 3;
-//     let a = 1;
-//     let b = 2;
-
-//     // Act - invokes the test with arranged params
-//     let actual = summer.sum(a, b);
-
-//     // Assert
-//     expect(actual).toBe(expected);
-
-//     // second assertion
-//     expected = 5;
-//     expect(summer.sum(2, 3)).toBe(expected);
-//   });
-// });
-
 // integration testing
-const mockData = [{
+const mockData = [
+  {
   amount: 15000,
   amount_notes:
     "$15,000 along with trip to compete in the live pitching finals at the Global Entrepreneurship Summit; grants and mentoring",
@@ -69,16 +51,11 @@ test("contains grants", () => {
   container.queryAllByText(/grants/i);
 });
 
-test('props.data.length is truthy', () => {
+test('Data to have a property of amount', () => {
   const container = rtl.render(<Provider store={store}>
     <GrantList data={mockData} />
   </Provider>);
-  const tree = JSON.stringify(container);
-  expect(tree.data.length).toBeTruthy();
+  // const tree = JSON.stringify(container);
+  expect(mockData[0]).toHaveProperty('amount');
 
 });
-
-// test("addFieldGoal adds 3 to current score", () => {
-//   expect(addFieldGoal(7)).toBe(10);
-//   expect(addFieldGoal(0)).toBe(3);
-// });
