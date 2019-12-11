@@ -24,8 +24,8 @@ const GrantSuggestionList = (props) => {
   return (
     <>
       {suggestions.length ? (
-        <div className={classes.suggestionWrapper}>
-          <h1 className={classes.userSuggestion}>User Suggestions </h1>
+        <div data-testid="main-list"  className={classes.suggestionWrapper}>
+          <h1 className={classes.userSuggestion}>User Suggestions</h1>
           <ul className={classes.suggestionUl}>
             {suggestions.map(suggestion => (
               <li

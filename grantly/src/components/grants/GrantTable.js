@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
+import moment from 'moment';
+import { fetchApi, adminFetchApi, postGrants, putGrants, deleteGrants, deleteSuggestion } from "../../actions";
+import { useAuth0 } from "../../react-auth0-wrapper";
+
+// Styling
 import MaterialTable from "material-table";
 import Typography from "@material-ui/core/Typography";
-import moment from 'moment';
-import { useAuth0 } from "../../react-auth0-wrapper";
-import { fetchApi, adminFetchApi, postGrants, putGrants, deleteGrants, deleteSuggestion } from "../../actions";
-import GrantSuggestionList from './GrantSuggestionList'
-
+import TablePagination from "@material-ui/core/TablePagination";
 import { grantTableStyles } from '../../styles/grantTableStyles';
+
+// Components
+import GrantSuggestionList from './GrantSuggestionList'
 
 export const GrantTable = (props) => {
   console.log('GrantTable props',props)
-  // console.log('GrantTable current user',props.currentUser)
-  // console.log('adminprops', props.inAdmin);
 
   // reformat deadline and last updated dates
   props.data.forEach(grant => {
@@ -137,9 +139,12 @@ export const GrantTable = (props) => {
         ]}
         data={props.data}
         // options={{
-        //   rowStyle: rowData => ({
-        //       backgroundColor: (rowData.requests.length > 0) ? '#EF7B5C' : 'none'  
-        //   })
+        //   headerStyle: {
+        //     position: 'sticky'
+        //   }
+          // rowStyle: rowData => ({
+          //     backgroundColor: (rowData.requests.length > 0) ? '#EF7B5C' : 'none'  
+          // })
         // }}
         detailPanel={[{
           tooltip: 'Suggestions',
@@ -149,6 +154,7 @@ export const GrantTable = (props) => {
           // icon: <ChevronRightIcon style={{ color: "yellow" }}/>,
           render: rowData => {
             return (
+              console.log('THIS IS ROWDATA', rowData),
             <GrantSuggestionList rowData={rowData} />)
           }
         }]}
@@ -184,8 +190,28 @@ export const GrantTable = (props) => {
               }, 600);
             })
         }}
+        // components={{
+        //   Pagination: props => (
+        //     <div>
+        //       <TablePagination
+        //         rowsPerPageOptions={[10, 50, { value: -1, label: "All" }]}
+        //         // count={props.data.length}
+        //       />
+        //     </div>
+        //   )
+        // }}
         zeroMinWidth
       />
+      
+      {/* <TablePagination
+        rowsPerPageOptions={[10, 50, { value: -1, label: "All" }]}
+        component="div"
+        count={props.data.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onChangePage={handleChangePage}
+        onChangeRowsPerPage={handleChangeRowsPerPage}
+      /> */}
     </div>
   );
 }
