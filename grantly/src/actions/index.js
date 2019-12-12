@@ -36,11 +36,9 @@ import {
 export const fetchApi = () => dispatch => {
   dispatch({ type: FETCH_START });
   axios
-
     // .get(`http://localhost:5000/api/grants`)
     // .get(`https://labs16-grantly.herokuapp.com/api/grants/`)
     .get(`https://grantly-staging.herokuapp.com/api/grants`)
-
     .then(response => {
       dispatch({ type: FETCH_SUCCESS, payload: response.data });
     })
@@ -50,9 +48,7 @@ export const fetchApi = () => dispatch => {
 };
 
 // fetch grants for admin
-
 export const adminFetchApi = user => dispatch => {
-
   dispatch({ type: FETCH_START });
   axios
     // .get(`http://localhost:5000/api/admin`, {
@@ -60,7 +56,6 @@ export const adminFetchApi = user => dispatch => {
       .get(`https://grantly-staging.herokuapp.com/api/admin`, {
       headers: { auth0id: user.auth_id, authorization: `Bearer ${user.token}` }
     })
-
     .then(response => {
       dispatch({ type: FETCH_SUCCESS, payload: response.data });
     })
@@ -75,7 +70,7 @@ export const saveFilters = filters => dispatch => {
 export const filterGrants = filters => dispatch => {
   let numCheck = 0;
 
-  //See hoe many filters user selected
+  //See how many filters user selected
   Object.values(filters).map(filter => {
     filter.length !== 0 && numCheck++;
   });
@@ -90,7 +85,6 @@ export const filterGrants = filters => dispatch => {
 };
 
 // logic for main selecting grant card
-
 export const selectGrant = grant => dispatch => {
   dispatch({ type: SELECT_GRANT, payload: grant });
   dispatch({ type: CHANGE_TAB, payload: 1 });
@@ -105,12 +99,9 @@ export const changeTab = tab => dispatch => {
 export const postGrants = addGrant => dispatch => {
   dispatch({ type: ADD_GRANT_START });
   axios
-
     // .post("http://localhost:5000/api/grants", addGrant)
     // .post("https://labs16-grantly.herokuapp.com/api/grants/", addGrant)
     .post("https://grantly-staging.herokuapp.com/api/grants", addGrant)
-
-
     .then(res => {
       dispatch({ type: ADD_GRANT_SUCCESS, payload: res.data });
     })
@@ -140,7 +131,6 @@ export const putGrants = (updateGrant, user) => dispatch => {
         }
       }
     )
-
     .then(success => {
       axios
         // .get(`http://localhost:5000/api/grants/`, {
@@ -151,7 +141,6 @@ export const putGrants = (updateGrant, user) => dispatch => {
             authorization: `Bearer ${user.token}`
           }
         })
-
         .then(response => {
           console.log("response", response);
           dispatch({
@@ -251,7 +240,6 @@ export const checkUser = user => dispatch => {
 };
 
 // logic for suggestion modal
-
 export const submitSuggestion = suggestion => dispatch => {
   dispatch({ type: SUBMIT_SUGGESTION_START });
   axios
@@ -271,12 +259,12 @@ export const submitSuggestion = suggestion => dispatch => {
 };
 
 // Delete a grant suggestion, must be an admin
-export const deleteSuggestion = (requestId, user) => dispatch => {
+export const deleteSuggestion = (suggestionId, user) => dispatch => {
   dispatch({ type: DELETE_SUGGESTION_START });
   axios
     .delete(
-      // `https://labs16-grantly.herokuapp.com/api/admin/suggestion/${requestId}`,
-      `https://grantly-staging.herokuapp.com/api/admin/suggestion/${requestId}`,
+      // `https://labs16-grantly.herokuapp.com/api/admin/suggestion/${suggestionId}`,
+      `https://grantly-staging.herokuapp.com/api/admin/suggestion/${suggestionId}`,
       {
         headers: {
           auth0id: user.auth_id,
@@ -284,8 +272,8 @@ export const deleteSuggestion = (requestId, user) => dispatch => {
         }
       }
     )
-
     .then(response => {
+      console.log('delete suggs in actions', response)
       dispatch({ type: DELETE_SUGGESTION_SUCCESS, payload: response.data });
     })
     .catch(error => {

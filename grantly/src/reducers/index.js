@@ -17,6 +17,9 @@ import {
   DELETE_GRANT_START,
   DELETE_GRANT_SUCCESS,
   DELETE_GRANT_FAILURE,
+  DELETE_SUGGESTION_START,
+  DELETE_SUGGESTION_SUCCESS,
+  DELETE_SUGGESTION_FAILURE,
   CHECK_ADMIN,
   SET_USER,
   SET_TOKEN_IN_STORE
@@ -36,66 +39,93 @@ const initialState = {
     domain_areas: [],
     admin_filters: []
   },
+  currentSuggestions: [],
   currentTab: 0,
   currentUser: {},
-  error: "",
   columns: [
-      { title: "Grant Status", 
+    {
+      title: "Grant Status",
       // cellStyle: {
       //   backgroundColor: (is_reviewed === false) ? '#3DB8B3' : 'none'
       // },
-      field: "is_reviewed", lookup: {
-        "true": "Approved",
-        "false": "Pending"
-      } },
-      { title: "Last Updated", field: "details_last_updated", type: "date", editable: "never" }, //sent to server in action. not editable by user
-      { title: "Name", field: "competition_name" },
-      { title: "Amount", field: "amount", type: "integer" },
-      { title: "Amount Notes", field: "amount_notes" },
-      { title: "Deadline", field: "most_recent_application_due_date", type: "date" },
-      {
-        title: "Focus Area",
-        field: "area_focus",
-        lookup: { 
-          "Arts": "Arts", 
-          "Child Care": "Child Care", 
-          "Economic Opportunity": "Economic Opportunity", 
-          "Energy & Resources": "Energy & Resources",
-          "Environment": "Environment",
-          "Financial": "Financial", 
-          "Food": "Food", 
-          "Health": "Health", 
-          "Housing": "Housing", 
-          "Information Technology": "Information Technology", 
-          "Life Improvement": "Life Improvement", 
-          "Social Entrepreneurship": "Social Entrepreneurship", 
-          "Workforce Development": "Workforce Development" }
-      },
-      { title: "Sponsor", field: "sponsoring_entity" },
-      { title: "Notes", field: "notes" },
-      { title: "Website", field: "website"},
-      { title: "Geographic Region", field: "geographic_region", lookup: {
-        "Global": "Global",
+      field: "is_reviewed",
+      lookup: {
+        true: "Approved",
+        false: "Pending"
+      }
+    },
+    {
+      title: "Last Updated",
+      field: "details_last_updated",
+      type: "date",
+      editable: "never"
+    }, //sent to server in action. not editable by user
+    { title: "Name", field: "competition_name" },
+    { title: "Amount", field: "amount", type: "integer" },
+    { title: "Amount Notes", field: "amount_notes" },
+    {
+      title: "Deadline",
+      field: "most_recent_application_due_date",
+      type: "date"
+    },
+    {
+      title: "Focus Area",
+      field: "area_focus",
+      lookup: {
+        Arts: "Arts",
+        "Child Care": "Child Care",
+        "Economic Opportunity": "Economic Opportunity",
+        "Energy & Resources": "Energy & Resources",
+        Environment: "Environment",
+        Financial: "Financial",
+        Food: "Food",
+        Health: "Health",
+        Housing: "Housing",
+        "Information Technology": "Information Technology",
+        "Life Improvement": "Life Improvement",
+        "Social Entrepreneurship": "Social Entrepreneurship",
+        "Workforce Development": "Workforce Development"
+      }
+    },
+    { title: "Sponsor", field: "sponsoring_entity" },
+    { title: "Notes", field: "notes" },
+    { title: "Website", field: "website" },
+    {
+      title: "Geographic Region",
+      field: "geographic_region",
+      lookup: {
+        Global: "Global",
         "North America": "North America",
-        "Europe": "Europe",
+        Europe: "Europe",
         "South America": "South America",
-        "Africa": "Africa",
-        "Asia": "Asia",
-        "Australia": "Australia"
-      }},
-      { title: "Target Demographic", field: "target_entrepreneur_demographic", lookup: {
+        Africa: "Africa",
+        Asia: "Asia",
+        Australia: "Australia"
+      }
+    },
+    {
+      title: "Target Demographic",
+      field: "target_entrepreneur_demographic",
+      lookup: {
         "Minority Business Enterprise": "Minority Business Enterprise",
         "Women Business Enterprise": "Women Business Enterprise",
-        "Disadvantaged Business Enterprise": "Disadvantaged Business Enterprise",
+        "Disadvantaged Business Enterprise":
+          "Disadvantaged Business Enterprise",
         "Veteran Business Enterprise": "Veteran Business Enterprise",
-        "Other": "Other",
-        "All": "All"
-      }},
-      { title: "Early Stage Funding", field: "early_stage_funding", lookup: {
-        "true": "Yes",
-        "false": "No"
-      }}
-    ],
+        Other: "Other",
+        All: "All"
+      }
+    },
+    {
+      title: "Early Stage Funding",
+      field: "early_stage_funding",
+      lookup: {
+        true: "Yes",
+        false: "No"
+      }
+    }
+  ],
+  error: ""
 };
 
 // Reducer
@@ -119,13 +149,14 @@ export const rooterReducer = (state = initialState, { type, payload }) => {
         currentUser: { ...state.currentUser, token: payload }
       };
     }
-    case FETCH_START:
+    case FETCH_START: {
       return {
         ...state,
         error: "",
         isFetching: true
       };
-    case FETCH_SUCCESS:
+    }
+    case FETCH_SUCCESS: {
       return {
         ...state,
         error: "",
@@ -134,7 +165,7 @@ export const rooterReducer = (state = initialState, { type, payload }) => {
         filteredGrants: payload,
         grantShowcase: payload[0]
       };
-
+    }
     case FETCH_ERROR:
       return {
         ...state,
@@ -157,7 +188,6 @@ export const rooterReducer = (state = initialState, { type, payload }) => {
         filters: payload
       };
     case FILTER_GRANTS:
-
       // The payload is an object where the properties are the filter type
       // and the values being an array with each item being the multiple filters
       // Ex. { amount: [under $1,000, $5,000 - $10,000]}
@@ -258,14 +288,13 @@ export const rooterReducer = (state = initialState, { type, payload }) => {
         return grant.id === payload[1];
       });
       console.log("update", payload);
-      console.log("showcase", showCase)
+      console.log("showcase", showCase);
       return {
         ...state,
         isFetching: false,
 
         data: payload[0],
-        filters: {...state.filters,    admin_filters: []
-        },
+        filters: { ...state.filters, admin_filters: [] },
 
         filteredGrants: payload[0],
         grantShowcase: showCase
@@ -291,6 +320,25 @@ export const rooterReducer = (state = initialState, { type, payload }) => {
         grantShowcase: payload[0]
       };
     case DELETE_GRANT_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        error: payload
+      };
+
+    case DELETE_SUGGESTION_START:
+      return {
+        ...state,
+        isFetching: true,
+        error: ""
+      };
+    case DELETE_SUGGESTION_SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        currentSuggestions: payload,
+      };
+    case DELETE_SUGGESTION_FAILURE:
       return {
         ...state,
         isFetching: false,
