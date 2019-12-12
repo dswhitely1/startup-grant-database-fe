@@ -7,7 +7,7 @@ export const suggestionStyles = makeStyles(theme => ({
     textAlign: "center",
     borderRadius: "2px",
     marginBottom: "0.5rem",
-    fontFamily: "Roboto",
+    fontFamily: "Nunito Sans",
   },
   subject: {
     fontSize: "1.6rem",
@@ -36,61 +36,43 @@ export const suggestionStyles = makeStyles(theme => ({
   expandOpen: {
     transform: "rotate(180deg)"
   },
-  suggestionButton: {
-    color: "#fff",
-    margin: "20px auto",
-    fontFamily: "Nunito Sans",
-    fontWeight: "600"
-  },
   suggestionWrapper: {
     display: 'flex',
     flexDirection: 'column',
-    margin: "1em",
+    backgroundColor: "#f7f7f7",
+    // padding: "1em",
   },
-  userSuggestion: {
+  userSuggestionTitle: {
     fontFamily: "Nunito Sans",
-    fontSize: '1.5em',
-    width: '8.25em',
+    fontSize: '1.2em',
+    paddingBottom: "1rem",
+    // width: '8.25em',
   },
   suggestionLi: {
     display: 'flex',
     flexWrap: 'wrap',
-    marginTop: '.5em'
+    borderTop: '3px solid #77D4D0',
+    // marginTop: '.5em',
   },
-  suggestionParagraph: {
-    width: '50%',
-    overflow: "auto",
-    borderBottom: '3px solid #77D4D0',
-    padding: '10px',
-    marginTop: '5px',
-    fontSize: '1.11rem'
-  },
-  suggestionHeader: {
+  suggestionTitle: {
     width: '50%',
     paddingLeft: '10px',
     paddingBottom: '5px',
     marginTop: '5px',
     fontSize: '1.3rem'
   },
-  suggestionNone: {
+  suggestionParagraph: {
+    width: '50%',
+    overflow: "auto",
+    padding: '10px',
+    marginTop: '5px',
+    fontSize: '1.11rem'
+  },
+  suggestionEmpty: {
     width: '20%',
     borderBottom: '3px solid #77D4D0',
     padding: '10px',
     marginTop: '5px',
     fontSize: '1.25rem'
   },
-  delSuggestBtn: {
-    borderRadius: '50px',
-    alignSelf: 'center',
-    backgroundColor: '#EF7B5C',
-    boxShadow: 'none',
-    borderWidth: '0px',
-    margin: '2px 5px 2px 0',
-    padding: '6px',
-    height: '40px',
-    width: '40px',
-    "&:hover": {
-      backgroundColor: '#f0a692'
-    }
-  }
 }));

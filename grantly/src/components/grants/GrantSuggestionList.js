@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { deleteSuggestion } from "../../actions";
-import DeleteOutlineRoundedIcon from "@material-ui/icons/DeleteOutlineRounded";
 
 // Styling
+import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
+import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
+import IconButton from "@material-ui/core/IconButton";
+import Typography from "@material-ui/core/Typography";
 import { suggestionStyles } from "../../styles/suggestionStyles";
 
 const GrantSuggestionList = props => {
@@ -13,6 +16,11 @@ const GrantSuggestionList = props => {
 
   // console.log('grantSuggestionList props: ', props)
   const [suggestions, setSuggestions] = useState(props.rowData.requests);
+  const [remainingSugs, setRemainingSugs] = useState(props.rowData.requests);
+
+  // useEffect(() => {
+  //   setSuggestions(suggestions)
+  // }, [suggestions])
 
   const onClickDelete = (suggestion_id, currentUser) => {
     props.deleteSuggestion(suggestion_id, currentUser);
@@ -26,39 +34,34 @@ const GrantSuggestionList = props => {
   return (
     <>
       {suggestions.length ? (
-        <div className={classes.suggestionWrapper}>
-          <h1 className={classes.userSuggestion}>User Suggestions </h1>
-          <ul className={classes.suggestionUl}>
-            {suggestions.map(suggestion => (
-              <li
-                alignItems="center"
-                className={classes.suggestionLi}
-                key={suggestion.id}
+        <ExpansionPanelDetails className={classes.suggestionWrapper}>
+          <Typography className={classes.userSuggestionTitle}>
+            User Suggestions
+          </Typography>
+          {suggestions.map(suggestion => (
+            <ExpansionPanelDetails
+              // alignItems="center"
+              className={classes.suggestionLi}
+              key={suggestion.id}
+            >
+              <IconButton
+                onClick={() => onClickDelete(suggestion.id, props.currentUser)}
               >
-                <button
-                  className={classes.delSuggestBtn}
-                  onClick={() =>
-                    onClickDelete(suggestion.id, props.currentUser)
-                  }
-                >
-                  <DeleteOutlineRoundedIcon />
-                </button>
-                <p className={classes.suggestionHeader}>
-                  {" "}
-                  {suggestion.subject}
-                </p>
-                <p className={classes.suggestionParagraph}>
-                  {suggestion.suggestion}
-                </p>
-              </li>
-            ))}
-          </ul>
-        </div>
+                <DeleteOutlineIcon />
+              </IconButton>
+              <Typography className={classes.suggestionTitle}>
+                Subject: {suggestion.subject}
+              </Typography>
+              <Typography className={classes.suggestionParagraph}>
+                Suggestion: {suggestion.suggestion}
+              </Typography>
+            </ExpansionPanelDetails>
+          ))}
+        </ExpansionPanelDetails>
       ) : (
-        <h1 className={classes.suggestionNone}>
-          {" "}
+        <Typography className={classes.suggestionEmpty}>
           There are no user suggestions at this time
-        </h1>
+        </Typography>
       )}
     </>
   );

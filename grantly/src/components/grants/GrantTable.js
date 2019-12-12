@@ -25,9 +25,27 @@ export const GrantTable = props => {
   console.log("GrantTable props", props);
 
   const [suggestions, setSuggestions] = useState(props.grantStore.requests)
+  const [grants, setGrants] = useState(props.grantStore)
+  const [curSugs, setCurSugs] = useState([])
+  const [curGrant, setCurGrant] = useState([])
 
-  // console.log('GrantTable current user',props.currentUser)
-  // console.log('adminprops', props.inAdmin);
+  const onClickDelete = (suggestion_id, grant, currentUser) => {
+
+    props.deleteSuggestion(suggestion_id, currentUser);
+    const updatedSuggs = suggestions.filter(
+      sugg => sugg.id !== suggestion_id
+    );
+    // setCurGrant(grant)
+    // setSuggestions(updatedSuggs);
+    console.log('return updated sugg', updatedSuggs)
+    // return grant
+  };
+
+  // const [expanded, setExpanded] = React.useState(false);
+
+  // const handleChange = panel => (event, isExpanded) => {
+  //   setExpanded(isExpanded ? panel : false);
+  // };
 
   // reformat deadline and last updated dates
   props.data.forEach(grant => {
@@ -72,7 +90,7 @@ export const GrantTable = props => {
 
   useEffect(() => {
     setSuggestions(suggestions)
-}, [suggestions])
+  }, [suggestions])
 
   // TODO: display a count of items needing to be reviewed
   // const needToBeReviewed = props.data.filter(
@@ -233,13 +251,18 @@ export const GrantTable = props => {
           rowData => ({
             tooltip: "Suggestions",
             // disabled: !rowData.requests.length,
-            icon: () => ( 
+            icon: () => (
               <ChevronRightIcon
                 style={ {fontSize: 40} }
                 // className={rowData.requests.length && style.displayNone}
               />
             ),
-            render: rowData => <GrantSuggestionList rowData={rowData} />
+            render: rowData => (
+              <GrantSuggestionList
+                rowData={rowData}
+                onClickDelete={onClickDelete}
+              />
+            )
           })
         ]}
         editable={{
