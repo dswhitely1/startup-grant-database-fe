@@ -47,6 +47,18 @@ export const GrantTable = props => {
     data: []
   });
 
+  const [isOpen, setIsOpen] = useState(false);
+  const toggleDrawer = open => event => {
+    if (
+      event &&
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+    setIsOpen(!isOpen);
+  };
+
   // const [stateRowData, setStateRowData] = useState([]);
 
   // const [hasCurrentUser, setHasCurrentUser] = useState({});
@@ -229,18 +241,25 @@ export const GrantTable = props => {
             backgroundColor: "#83D7D1"
           }
         }}
-        detailPanel={[
-          rowData => ({
-            tooltip: "Suggestions",
-            // disabled: !rowData.requests.length,
-            icon: () => ( 
-              <ChevronRightIcon
-                style={ {fontSize: 40} }
-                // className={rowData.requests.length && style.displayNone}
-              />
-            ),
-            render: rowData => <GrantSuggestionList rowData={rowData} />
-          })
+        // detailPanel={[
+        //   rowData => ({
+        //     tooltip: "Suggestions",
+        //     // disabled: !rowData.requests.length,
+        //     icon: () => ( 
+        //       <ChevronRightIcon
+        //         style={ {fontSize: 40} }
+        //         // className={rowData.requests.length && style.displayNone}
+        //       />
+        //     ),
+        //     render: rowData => <GrantSuggestionList rowData={rowData} />
+        //   })
+        // ]}
+        actions={[
+          {
+            icon: 'save',
+            tooltip: 'Suggestions',
+            onClick: (event, rowData) => toggleDrawer(<GrantSuggestionList rowData={rowData} />)
+          },
         ]}
         editable={{
           onRowAdd: newData =>
