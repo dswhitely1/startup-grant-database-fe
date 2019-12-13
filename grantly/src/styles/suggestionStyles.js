@@ -15,12 +15,12 @@ export const suggestionStyles = makeStyles(theme => ({
   },
   button: {
     color: "#fff",
-    margin: "20px auto",
+    margin: "20px 20px",
     fontFamily: "Nunito Sans",
     fontWeight: "600"
   },
   details: {
-    padding: "0 0 0 1rem"
+    padding: "20rem 20rem 20rem 1rem"
   },
   suggestion: {
     fontSize: "1.2rem",
@@ -40,33 +40,43 @@ export const suggestionStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: "#f7f7f7",
-    // padding: "1em",
+    padding: "1.2em 0 0 1.4em",
   },
   userSuggestionTitle: {
     fontFamily: "Nunito Sans",
     fontSize: '1.2em',
     paddingBottom: "1rem",
+    fontWeight: 600,
     // width: '8.25em',
   },
   suggestionLi: {
+    width: '40%',
     display: 'flex',
     flexWrap: 'wrap',
+    padding: 0,
+    alignItems: "center",
     borderTop: '3px solid #77D4D0',
     // marginTop: '.5em',
   },
   suggestionTitle: {
-    width: '50%',
-    paddingLeft: '10px',
-    paddingBottom: '5px',
-    marginTop: '5px',
-    fontSize: '1.3rem'
+    // width: '50%',
+    // padding: "0",
+    // paddingLeft: '10px',
+    // paddingBottom: '5px',
+    // marginTop: '5px',
+    // fontSize: '1rem'
+    // textAlign:'center',
+    // fontSize: theme.typography.pxToRem(15),
+    // flexBasis: "33%",
+    // flexShrink: 0,
   },
   suggestionParagraph: {
-    width: '50%',
-    overflow: "auto",
-    padding: '10px',
-    marginTop: '5px',
-    fontSize: '1.11rem'
+    // fontSize: theme.typography.pxToRem(15),
+    // width: '50%',
+    // overflow: "auto",
+    // padding: '10px',
+    // marginTop: '5px',
+    // fontSize: '1.11rem'
   },
   suggestionEmpty: {
     width: '20%',
@@ -75,4 +85,7 @@ export const suggestionStyles = makeStyles(theme => ({
     marginTop: '5px',
     fontSize: '1.25rem'
   },
+  suggestionCol: {
+    fontFamily: "EB Garamond"
+  }
 }));
