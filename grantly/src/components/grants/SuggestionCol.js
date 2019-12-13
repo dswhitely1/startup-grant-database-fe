@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
+import { Typography } from "@material-ui/core";
+import { suggestionStyles } from "../../styles/suggestionStyles";
 
 const SuggestionCol = props => {
-    console.log("sugCol", props)
-    const [suggestions, setSuggestions] = useState(0)
+  console.log("sugCol props", props)
 
-    useEffect(() => {
-        setSuggestions(props.rowData.requests.length)
-    }, [props.rowData.requests.length]);
+  const [count, setCount] = useState(0)
 
-    return (
-        <>
-        {suggestions}
-        </>
-    )
-}
-export default SuggestionCol;
+  useEffect(() => {
+    setCount(props.rowData.requests.length)
+  }, [props.rowData.requests.length])
+
+  const style = suggestionStyles()
+
+  return <Typography className={style.suggestionCol}>{count}</Typography>
+};
+export default SuggestionCol
