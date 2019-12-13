@@ -25,29 +25,13 @@ export const GrantTable = props => {
   console.log("GrantTable props", props);
 
   const [suggestions, setSuggestions] = useState(props.grantStore.requests)
-  const [grants, setGrants] = useState(props.grantStore)
-  const [curSugs, setCurSugs] = useState([])
-  const [curGrant, setCurGrant] = useState([])
 
-  const onClickDelete = (suggestion_id, grant, currentUser) => {
+  const [state, setState] = useState({
+    // This array is currently needed in order for state to save onRowUpdate
+    data: []
+  });
 
-    props.deleteSuggestion(suggestion_id, currentUser);
-    const updatedSuggs = suggestions.filter(
-      sugg => sugg.id !== suggestion_id
-    );
-    // setCurGrant(grant)
-    // setSuggestions(updatedSuggs);
-    console.log('return updated sugg', updatedSuggs)
-    // return grant
-  };
-
-  // const [expanded, setExpanded] = React.useState(false);
-
-  // const handleChange = panel => (event, isExpanded) => {
-  //   setExpanded(isExpanded ? panel : false);
-  // };
-
-  // reformat deadline and last updated dates
+  // reformats deadline and last updated dates
   props.data.forEach(grant => {
     grant.most_recent_application_due_date =
       moment(grant.most_recent_application_due_date).format("MMM DD, YYYY") ===
@@ -60,13 +44,7 @@ export const GrantTable = props => {
         : moment(grant.details_last_updated).format("L LT");
   });
 
-  const [state, setState] = useState({
-    // This array is currently needed in order for state to save onRowUpdate
-    data: []
-  });
-
   // const [stateRowData, setStateRowData] = useState([]);
-
   // const [hasCurrentUser, setHasCurrentUser] = useState({});
 
   // useEffect(() => {
@@ -89,33 +67,9 @@ export const GrantTable = props => {
   }, [props.currentUser]);
 
   useEffect(() => {
+    console.log('suggestions', suggestions)
     setSuggestions(suggestions)
   }, [suggestions])
-
-  // TODO: display a count of items needing to be reviewed
-  // const needToBeReviewed = props.data.filter(
-  //   grant => grant.is_reviewed === false
-  // ).length;
-  // const onClickDelete = (suggestion_id, currentUser) => {
-  //   console.log(suggestion_id, currentUser)
-  //   props.deleteSuggestion(suggestion_id, currentUser);
-  // };
-
-  const editComponentFunc = props => {
-    console.log("edit props", props);
-    return (
-      <TextField
-        id="standard basic"
-        style={{
-          minWidth: "400px",
-          fontFamily: "EB Garamond"
-        }}
-        multiline
-        value={props.value}
-        onChange={e => props.onChange(e.target.value)}
-      />
-    );
-  };
 
   const style = grantTableStyles();
 
@@ -130,7 +84,8 @@ export const GrantTable = props => {
           {
             title: "User Suggestions",
             cellStyle: {
-              minWidth: "75px"
+              width: "20px"
+              // maxWidth: "15px",
             },
             customSort: (a, b) => a.requests.length - b.requests.length,
             render: rowData => <SuggestionCol rowData={rowData} />
@@ -191,14 +146,32 @@ export const GrantTable = props => {
               "Workforce Development": "Workforce Development"
             }
           },
-          { title: "Sponsor", field: "sponsoring_entity" },
+          {
+            title: "Sponsor",
+            field: "sponsoring_entity",
+            cellStyle: {
+              minWidth: "200px"
+            }
+          },
           {
             title: "Notes",
             field: "notes",
             cellStyle: {
               minWidth: "400px"
             },
-            editComponent: editComponentFunc
+            editComponent: props => (
+              <TextField
+                id="standard basic"
+                style={{
+                  minWidth: "400px",
+                  fontFamily: "EB Garamond",
+                  textSize: "1rem"
+                }}
+                multiline
+                value={props.value}
+                onChange={e => props.onChange(e.target.value)}
+              />
+            )
           },
           { title: "Website", field: "website" },
           {
@@ -240,10 +213,11 @@ export const GrantTable = props => {
         options={{
           headerStyle: {
             fontFamily: "Nunito Sans",
-            fontSize: "1em",
+            fontSize: ".9em",
             color: "#3A3A3A",
+            padding: "0 auto",
             // letterSpacing: "0.025em",
-            fontWeight: 700,
+            fontWeight: 600,
             backgroundColor: "#83D7D1"
           }
         }}
@@ -253,16 +227,16 @@ export const GrantTable = props => {
             // disabled: !rowData.requests.length,
             icon: () => (
               <ChevronRightIcon
-                style={ {fontSize: 40} }
+                style={
+                  {
+                    // fontSize: 30,
+                    // marginLeft: "5px"
+                  }
+                }
                 // className={rowData.requests.length && style.displayNone}
               />
             ),
-            render: rowData => (
-              <GrantSuggestionList
-                rowData={rowData}
-                onClickDelete={onClickDelete}
-              />
-            )
+            render: rowData => <GrantSuggestionList rowData={rowData} />
           })
         ]}
         editable={{
@@ -318,6 +292,7 @@ const mapStateToProps = state => {
     currentUser: state.currentUser,
     savedFilters: state.filters,
     columns: state.columns,
+    currentSuggestions: state.currentSuggestions
   };
 };
 

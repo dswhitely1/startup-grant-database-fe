@@ -8,11 +8,7 @@ export const grantTableStyles = makeStyles(theme => ({
   },
   paper: {
     margin: "1em .5em 2em .5em"
-  },
-  headerStyle: {
-    fontFamily: "Nunito Sans",
-    fontSize: "1em",
-  },
+  }
 }));
 
 export default grantTableStyles;
