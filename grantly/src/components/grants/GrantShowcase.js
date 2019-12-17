@@ -9,16 +9,18 @@ import moment from "moment";
 
 // Objects
 import { Card, Grid, Button, Typography, Divider } from "@material-ui/core";
+import BookmarkIcon from "@material-ui/icons/Bookmark";
 import BookmarkBorderOutlinedIcon from "@material-ui/icons/BookmarkBorderOutlined";
 import LanguageIcon from "@material-ui/icons/Language";
 import SuggestionDialog from "../dialogs/SuggestionDialog";
 import EditGrantDialog from "../dialogs/EditGrantDialog";
-
+import IconButton from "@material-ui/core/IconButton";
+import Tooltip from "@material-ui/core/Tooltip";
+import Fade from "@material-ui/core/Fade";
 // =========== STYLES ===========
 import { showcaseStyles } from "../../styles/grantShowcaseStyles";
 
 export const GrantShowcase = props => {
-
   const showcase = showcaseStyles();
 
   function formatNumbers(num) {
@@ -30,13 +32,13 @@ export const GrantShowcase = props => {
       {props.grant.most_recent_application_due_date}
     </Moment>
   ) : (
-      <div>See website for details</div>
-    );
+    <div>See website for details</div>
+  );
 
   const momentDeadline =
     props.grant.most_recent_application_due_date &&
     " or in about " +
-    moment(props.grant.most_recent_application_due_date).fromNow();
+      moment(props.grant.most_recent_application_due_date).fromNow();
 
   if (props.isFetching) {
     return (
@@ -45,6 +47,7 @@ export const GrantShowcase = props => {
       </div>
     );
   }
+  const handleClicky = () => window.console.log("clicky");
 
   return (
     <div>
@@ -88,7 +91,19 @@ export const GrantShowcase = props => {
                     grant={props.grant}
                   />
                 ) : //( <BookmarkBorderOutlinedIcon className={showcase.bookmark} />)
-                  null}
+                null}
+              </Grid>
+
+              <Grid item>
+                <Tooltip
+                  TransitionComponent={Fade}
+                  TransitionProps={{ timeout: 600 }}
+                  title="Save"
+                >
+                  <IconButton aria-label="save">
+                    <BookmarkBorderOutlinedIcon className={showcase.bookmark} />
+                  </IconButton>
+                </Tooltip>
               </Grid>
             </Grid>
           </Grid>
@@ -213,7 +228,7 @@ export const GrantShowcase = props => {
                 color="primary"
               >
                 Apply to Grant
-            </Button>
+              </Button>
             </a>
           </Grid>
           {!props.inAdmin && (
@@ -235,7 +250,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  {}
-)(GrantShowcase);
+export default connect(mapStateToProps, {})(GrantShowcase);

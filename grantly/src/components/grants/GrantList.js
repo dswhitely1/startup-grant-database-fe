@@ -26,7 +26,8 @@ export const GrantList = props => {
       props.adminFetchApi(props.currentUser);
     } else if (props.data.length === 0) {
       props.fetchApi();
-    } else  {
+    } else {
+      //create user fetech api action, check if user in token, then run the action to fetch saved grants.
       // props.fetchApi();
     }
   }, []);
@@ -74,7 +75,4 @@ const mapStateToProps = state => {
     savedFilters: state.filters
   };
 };
-export default connect(
-  mapStateToProps,
-  { fetchApi, adminFetchApi }
-)(GrantList);
+export default connect(mapStateToProps, { fetchApi, adminFetchApi })(GrantList);
