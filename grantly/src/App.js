@@ -23,7 +23,7 @@ import { theme } from "./styles/theme";
 
 function App({ fetchApi }) {
   const { user, isAuthenticated, getTokenSilently } = useAuth0();
-  console.log('USER', user)
+  // console.log('USER', user)
 
   const [currentUser, setCurrentUser] = useState({});
 
@@ -31,8 +31,8 @@ function App({ fetchApi }) {
     if (isAuthenticated) {
       const authToken = getTokenSilently().then(res => {
         const token = res;
-        console.log('TOKEN', token)
-        console.log('USEEFFECT USER', user)
+        // console.log('TOKEN', token)
+        // console.log('USEEFFECT USER', user)
         // const strUser = JSON.stringify(user);
         // console.log('userString', strUser)
         setCurrentUser({...user, token: token});
@@ -40,7 +40,7 @@ function App({ fetchApi }) {
     }
   }, [user]);
 
-  console.log('IranUser', currentUser);
+  // console.log('IranUser', currentUser);
   return (
     <Router>
       <ThemeProvider theme={theme}>

@@ -28,7 +28,7 @@ const TableSuggestions = props => {
 
   const [suggestions, setSuggestions] = useState([]);
   const [open, setOpen] = useState(false);
-  console.log("made it to suggestion Table", token);
+  // console.log("made it to suggestion Table", token);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -50,7 +50,7 @@ const TableSuggestions = props => {
       )
       .then(res => {
         setSuggestions(res.data);
-        console.log("AXIOS WORKED", res.data);
+        // console.log("AXIOS WORKED", res.data);
       })
       .catch(err => {
         console.log(err);
