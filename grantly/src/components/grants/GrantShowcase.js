@@ -8,10 +8,13 @@ import { useAuth0 } from "../../react-auth0-wrapper.js";
 
 // Objects
 import { Card, Grid, Button, Typography, Divider } from "@material-ui/core";
-// import BookmarkBorderOutlinedIcon from "@material-ui/icons/BookmarkBorderOutlined";
+import BookmarkBorderOutlinedIcon from "@material-ui/icons/BookmarkBorderOutlined";
+import DeleteIcon from "@material-ui/icons/Delete";
 import LanguageIcon from "@material-ui/icons/Language";
 import SuggestionDialog from "../dialogs/SuggestionDialog";
-import EditGrantDialog from "../dialogs/EditGrantDialog";
+import IconButton from "@material-ui/core/IconButton";
+import Tooltip from "@material-ui/core/Tooltip";
+import Fade from "@material-ui/core/Fade";
 
 // Styles
 import { showcaseStyles } from "../../styles/grantShowcaseStyles";
@@ -29,13 +32,13 @@ export const GrantShowcase = props => {
       {props.grant.most_recent_application_due_date}
     </Moment>
   ) : (
-    <div>See website for details</div>
-  );
+      <div>See website for details</div>
+    );
 
   const momentDeadline =
     props.grant.most_recent_application_due_date &&
     " or in about " +
-      moment(props.grant.most_recent_application_due_date).fromNow();
+    moment(props.grant.most_recent_application_due_date).fromNow();
 
   if (props.isFetching) {
     return (
@@ -47,13 +50,7 @@ export const GrantShowcase = props => {
 
   return (
     <div>
-      <Card
-        className={
-          props.inAdmin
-            ? `${style.showcaseCard} ${style.inAdmin}`
-            : style.showcaseCard
-        }
-      >
+      <Card className={style.showcaseCard}>
         {/* ================= Top container ================= */}
         <div>
           <Grid
@@ -79,16 +76,33 @@ export const GrantShowcase = props => {
               </Grid>
             </Grid>
 
-            <Grid>
-              <Grid item>
-                {props.inAdmin ? (
-                  <EditGrantDialog
-                    className={style.editIcon}
-                    grant={props.grant}
-                  />
-                ) : //( <BookmarkBorderOutlinedIcon className={style.bookmark} />)
-                null}
-              </Grid>
+            <Grid item>
+              {props.inGrants ? (
+                <Tooltip
+                  TransitionComponent={Fade}
+                  TransitionProps={{ timeout: 600 }}
+                  title="Add to Favorites"
+                >
+                  <IconButton aria-label="save">
+                    <BookmarkBorderOutlinedIcon
+                      className={showcaseStyles.bookmark}
+                    />
+                  </IconButton>
+                </Tooltip>
+              ) : null}
+            </Grid>
+            <Grid item>
+              {props.inFavorite ? (
+                <Tooltip
+                  TransitionComponent={Fade}
+                  TransitionProps={{ timeout: 600 }}
+                  title="Delete Favorites"
+                >
+                  <IconButton aria-label="DeleteIcon" >
+                    <DeleteIcon className={showcaseStyles.bookmark} />
+                  </IconButton>
+                </Tooltip>
+              ) : null}
             </Grid>
           </Grid>
 
@@ -234,7 +248,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  {}
-)(GrantShowcase);
+export default connect(mapStateToProps, {})(GrantShowcase);

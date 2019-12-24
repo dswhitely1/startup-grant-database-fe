@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { useAuth0 } from "../react-auth0-wrapper";
 import FGLogo from "../assets/FGLogo";
@@ -16,13 +16,13 @@ import {
   List,
   ListItem,
   ListItemAvatar,
-  Avatar,
+  // Avatar,
   ListItemIcon
 } from "@material-ui/core";
-
+import BookmarkIcon from "@material-ui/icons/Bookmark";
 import MenuIcon from "@material-ui/icons/Menu";
-import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
-import FaceIcon from "@material-ui/icons/Face";
+// import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
+// import FaceIcon from "@material-ui/icons/Face";
 import ViewListIcon from "@material-ui/icons/ViewList";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import MailIcon from "@material-ui/icons/Mail";
@@ -30,6 +30,7 @@ import InfoIcon from "@material-ui/icons/Info";
 import { navStyles } from "../styles/navStyles";
 
 export const NavBar = props => {
+  console.log("navProps", props);
   const {
     isAuthenticated,
     loginWithRedirect,
@@ -71,7 +72,6 @@ export const NavBar = props => {
           </Link>
         </ListItem>
 
-
         {isAuthenticated ? (
           <ListItem className={classes.drawerStlye}>
             <ListItemAvatar>
@@ -85,6 +85,18 @@ export const NavBar = props => {
           </ListItem>
         ) : null}
 
+        {isAuthenticated ? (
+          <ListItem className={classes.drawerStlye}>
+            <ListItemAvatar>
+              <ListItemIcon className={classes.icon}>
+                <BookmarkIcon />
+              </ListItemIcon>
+            </ListItemAvatar>
+            <Link to="/favorites" className={classes.drawerLink}>
+              <Typography variant="h5">Favorite Grants</Typography>
+            </Link>
+          </ListItem>
+        ) : null}
 
         <ListItem className={classes.drawerStlye}>
           <ListItemAvatar>
@@ -98,9 +110,7 @@ export const NavBar = props => {
         </ListItem>
 
         {isAuthenticated ? (
-          user["https://founder-grants.com/appdata"].authorization.roles.find(
-            () => "Moderator"
-          ) === "Moderator" ? (
+          props.currentUser === "Moderator" ? (
             <ListItem className={classes.drawerStlye}>
               <ListItemAvatar>
                 <ListItemIcon className={classes.icon}>
@@ -236,4 +246,10 @@ export const NavBar = props => {
   }
 };
 
-export default NavBar;
+const mapStateToProps = state => {
+  return {
+    currentUser: state.currentUser
+  };
+};
+
+export default connect(mapStateToProps, {})(NavBar);

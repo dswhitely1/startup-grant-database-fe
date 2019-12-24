@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { deleteSuggestion } from "../../actions";
 import axios from "axios";
-import { useAuth0 } from "../../react-auth0-wrapper.js";
 import useGetToken from "../../auth/useGetToken.js";
 // Styling
 import { tableSuggStyles } from "../../styles/tableSuggStyles";
@@ -22,7 +21,6 @@ import DeleteIcon from "@material-ui/icons/Delete";
 
 
 const TableSuggestions = props => {
-  const { isAuthenticated, user, loading } = useAuth0();
 
   const [token] = useGetToken();
 

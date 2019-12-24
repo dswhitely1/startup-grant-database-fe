@@ -23,7 +23,7 @@ import TableSuggestions from "./TableSuggestions";
 
 export const GrantTable = props => {
   console.log("GrantTable props", props);
-  const { isAuthenticated, user, loading } = useAuth0();
+  const { loading } = useAuth0();
   const [token] = useGetToken();
   // reformat deadline and last updated dates
   props.data.forEach(grant => {
@@ -261,7 +261,8 @@ const mapStateToProps = state => {
     data: state.filteredGrants,
     grantStore: state.data,
     savedFilters: state.filters,
-    columns: state.columns
+    columns: state.columns,
+    currentUser: state.currentUser
   };
 };
 
