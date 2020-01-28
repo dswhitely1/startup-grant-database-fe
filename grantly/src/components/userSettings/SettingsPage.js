@@ -3,13 +3,14 @@ import { connect } from "react-redux";
 import { useAuth0 } from "../../react-auth0-wrapper";
 
 import SettingsForm from './SettingsForm'
-
+import SettingsCard from './SettingsCard'
 const SettingsPage = props => {
     
     return (
         <>
 
-        <h1>Test</h1>
+        <SettingsCard />
+        <br></br>
         <SettingsForm />
 
 
