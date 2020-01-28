@@ -8,7 +8,7 @@ const SettingsPage = props => {
     
     return (
         <>
-
+        // if props .length = 0 do not render!
         <SettingsCard />
         <br></br>
         <SettingsForm />
