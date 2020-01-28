@@ -5,6 +5,7 @@ import { useAuth0 } from "../../react-auth0-wrapper";
 // material / desgin imports
 import { Grid, Typography, Divider } from "@material-ui/core";
 import formStyles from "../../styles/formStyles"
+
 const SettingsCard = props => {
     
     const styles = formStyles();
