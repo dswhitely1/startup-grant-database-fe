@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { fetchApi, favoriteFetchApi } from "./actions/index";
 import { useAuth0 } from "./react-auth0-wrapper";
 
+
 // Objects
 import SubmitForm from "./components/SubmitForm";
 import Home from "./views/Home";
@@ -15,6 +16,7 @@ import NavBar from "./components/Navbar";
 import Sitemap from "./components/Sitemap";
 import PrivateRoute from "./util/PrivateRoute";
 import Favorites from "./views/Favorites";
+import SettingsPage from './components/userSettings/SettingsPage'
 // Stylings
 import { ThemeProvider } from "@material-ui/styles";
 import { theme } from "./styles/theme";
@@ -75,7 +77,18 @@ function App({ fetchApi }) {
                 <GrantTable {...props} currentUser={currentUser} />
               )}
             />
-            // <PrivateRoute exact path="/promote" component
+            // <PrivateRoute exact path="/promote" component />
+                
+          )}
+
+          {isAuthenticated && (
+            <PrivateRoute
+              exact
+              path='/settings'
+              render={props => (
+                <SettingsPage {...props} currentUser={currentUser}/>
+              )}
+            />
           )}
           <Route
             exact

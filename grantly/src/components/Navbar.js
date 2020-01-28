@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 
-import { Link } from "react-router-dom";
 import { useAuth0 } from "../react-auth0-wrapper";
 import FGLogo from "../assets/FGLogo";
 import Media from "react-media";
+import { Link }from 'react-router-dom'
 
 // Material core imports
 import {
@@ -27,6 +27,7 @@ import ViewListIcon from "@material-ui/icons/ViewList";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import MailIcon from "@material-ui/icons/Mail";
 import InfoIcon from "@material-ui/icons/Info";
+import SettingsIcon from "@material-ui/icons/Settings"
 import { navStyles } from "../styles/navStyles";
 
 export const NavBar = props => {
@@ -123,6 +124,19 @@ export const NavBar = props => {
             </ListItem>
           ) : null
         ) : null}
+
+        {isAuthenticated ? (
+          <ListItem className={classes.drawerStlye}>
+            <ListItemAvatar >
+                <ListItemIcon className={classes.icon}>
+                  <SettingsIcon />
+                </ListItemIcon>
+            </ListItemAvatar>
+            <Link to="/settings" className={classes.drawerLink}>
+              <Typography variant="h5">Settings</Typography>
+            </Link>
+          </ListItem>
+        ) : null }
 
         {isAuthenticated ? (
           <ListItem>
