@@ -21,7 +21,7 @@ const SettingsPage = props => {
         <SettingsCard />
         {/* // once we have functionaliy:
             a) make form and card have isEditing state for better UI */}
-
+        
         <br></br>
         <SettingsForm />
 

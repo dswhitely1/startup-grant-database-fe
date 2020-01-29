@@ -14,6 +14,7 @@ const initialState = {
     city: '',
     street: '',
     apartment: '',
+    postal: ''
 }
 const SettingsForm = props => {
     const styles = formStyles();
@@ -115,7 +116,12 @@ const SettingsForm = props => {
                 <Grid item xs={2}>
                     <TextField
                         label="Apartment"
-                        ty
+                        type="text"
+                        name="Apartment"
+                        fullWidth
+                        placeholder="Apartment"
+                        value={null}
+                        onChange={handleChanges}
                     />
                 </Grid>
                 <Grid item xs={5}>
@@ -123,7 +129,7 @@ const SettingsForm = props => {
                 <TextField
                     label="Postal Code"
                     type="text"
-                    name="Postal Code"
+                    name="postal"
                     fullWidth
                     placeholder="Postal Code"
                     value={null}

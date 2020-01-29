@@ -19,7 +19,7 @@ const SettingsCard = props => {
             <Grid container spacing={6} className={styles.bottomBox}>
                 <Grid item xs={6}>
 
-                    <h3>First Name:</h3>
+                    <h3>First Name: </h3>
 
                 </Grid>
                 <Grid item xs={6}>
