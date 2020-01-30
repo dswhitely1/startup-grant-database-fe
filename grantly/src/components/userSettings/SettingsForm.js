@@ -6,6 +6,7 @@ import { useAuth0 } from "../../react-auth0-wrapper";
 import { Grid, Typography, TextField, Divider, Button } from "@material-ui/core";
 import formStyles from "../../styles/formStyles";
 
+import {updateUser} from '../../actions'
 const initialState = {
     first_name: '',
     last_name: '',
@@ -140,8 +141,7 @@ const SettingsForm = (props) => {
                 </Grid>
             </Grid>
             <Button variant="contained" color="primary" size="large"
-                    // onClick={() => props.updateUser(userInfo, also needs id, props.history)}                   }
-                    >
+                    onClick={() => props.updateUser(userInfo, props.history)}>
                 Save
             </Button>
     </Fragment>
