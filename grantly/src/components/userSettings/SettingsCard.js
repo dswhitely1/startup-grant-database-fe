@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react'
+import React, { useState, Fragment, useEffect } from 'react'
 import { connect } from "react-redux";
 import { useAuth0 } from "../../react-auth0-wrapper";
 
@@ -7,24 +7,30 @@ import { Grid, Typography, Divider } from "@material-ui/core";
 import formStyles from "../../styles/formStyles"
 
 const SettingsCard = props => {
-    
+    const { user, isAuthenticated, getTokenSilently } = useAuth0();
+
     const styles = formStyles();
+
+    const [currentUser, setCurrentUser] = useState({});
 
     return (
         <Fragment>
             <Typography variant="h5" className={styles.subjectHeader}>
-                <h1>Name Here's Info</h1>
+                <h1>{currentUser.nickname}'s Info</h1>
             </Typography>
             <Divider variant="middle" />
             <Grid container spacing={6} className={styles.bottomBox}>
-                <Grid item xs={6}>
+                <Grid item xs={4}>
 
                     <h3>First Name: </h3>
 
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={4}>
                     <h3>Last Name:</h3>
                 </Grid>
+                <Grid item xs={4}>
+                    <h3>Phone Number:</h3>
+                    </Grid>
                 <Grid item xs={4}>
                     <h3>Country:</h3>
                 </Grid>
@@ -55,11 +61,11 @@ const SettingsCard = props => {
     )
 }
 
-const mapStateToProps = ({ error }) => ({
-    error
+const mapStateToProps = state => ({
+
   });
   
-  export default connect(mapStateToProps, {})(
+  export default connect(mapStateToProps, {  })(
     SettingsCard
   );
   

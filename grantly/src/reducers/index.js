@@ -30,7 +30,13 @@ import {
   SUBMIT_FAVORITE_START,
   SUBMIT_FAVORITE_SUCCESS,
   SUBMIT_FAVORITE_FAILURE,
-  SELECT_FAVORITE
+  SELECT_FAVORITE,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_START,
+  UPDATE_USER_FAILURE,
+  DELETE_USER_START,
+  DELETE_USER_SUCCESS,
+  DELETE_USER_FAILURE
 } from "../actions/types";
 import moment from "moment";
 
@@ -309,6 +315,33 @@ export const rooterReducer = (state = initialState, { type, payload }) => {
         error: payload,
         addedFavorite: false
       };
+
+     case UPDATE_USER_SUCCESS:
+       return {
+          ...state,
+       }
+      case UPDATE_USER_START:
+        return {
+          ...state
+        }
+      case UPDATE_USER_FAILURE:
+        return {
+          ...state,
+          error: payload
+        }
+      case DELETE_USER_START: 
+        return {
+          ...state
+        }
+      case DELETE_USER_SUCCESS:
+        return {
+          ...state
+        }
+      case DELETE_USER_FAILURE:
+        return {
+          ...state,
+          error: payload
+        }
     default:
       return state;
   }

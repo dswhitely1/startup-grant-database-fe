@@ -26,14 +26,19 @@ const SettingsPage = props => {
         <SettingsForm />
 
         <Grid container spacing={1} className={styles.bottomBox}>
-        <Grid item xs={6}>
+        <Grid item xs={4}>
             <Link>
                 Change Password
             </Link>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={4}>
             <Link>
-                Change Email
+                Change Contact Info
+            </Link>
+        </Grid>
+        <Grid item xs={4}>
+            <Link>
+                Delete Account
             </Link>
         </Grid>
         </Grid>

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { useAuth0 } from "../../react-auth0-wrapper";
 
 // material / desgin imports
-import { Grid, Typography, TextField, Divider } from "@material-ui/core";
+import { Grid, Typography, TextField, Divider, Button } from "@material-ui/core";
 import formStyles from "../../styles/formStyles";
 
 const initialState = {
@@ -16,7 +16,7 @@ const initialState = {
     apartment: '',
     postal: ''
 }
-const SettingsForm = props => {
+const SettingsForm = (props) => {
     const styles = formStyles();
 
     const [userInfo, setUserInfo] = useState(initialState)
@@ -34,6 +34,7 @@ const SettingsForm = props => {
       }
     return (
         <Fragment>
+            {/* props.user.map here */}
             <Typography variant="h5" className={styles.subjectHeader}>
                 <h1>Name Here's Settings</h1>
             </Typography>
@@ -47,7 +48,7 @@ const SettingsForm = props => {
                     type="text"
                     name="first_name"
                     placeholder="First Name"
-                    value={null}
+                    value={userInfo.first_name}
                     onChange={handleChanges}
                 />
                 </Grid>
@@ -58,7 +59,7 @@ const SettingsForm = props => {
                     fullWidth
                     name="last_name"
                     placeholder="Last Name"
-                    value={null}
+                    value={userInfo.last_name}
                     onChange={handleChanges}
                 />
                 </Grid>
@@ -69,7 +70,7 @@ const SettingsForm = props => {
                     name="country"
                     fullWidth
                     placeholder="Country"
-                    value={null}
+                    value={userInfo.country}
                     onChange={handleChanges}
                 />
                 
@@ -82,7 +83,7 @@ const SettingsForm = props => {
                     name="state"
                     fullWidth
                     placeholder="State / Province"
-                    value={null}
+                    value={userInfo.state}
                     onChange={handleChanges}
                 />
                 
@@ -95,7 +96,7 @@ const SettingsForm = props => {
                     name="city"
                     fullWidth
                     placeholder="City"
-                    value={null}
+                    value={userInfo.city}
                     onChange={handleChanges}
                 />
                 
@@ -108,7 +109,7 @@ const SettingsForm = props => {
                     name="Street"
                     fullWidth
                     placeholder="Street"
-                    value={null}
+                    value={userInfo.street}
                     onChange={handleChanges}
                 />
                 
@@ -117,10 +118,10 @@ const SettingsForm = props => {
                     <TextField
                         label="Apartment"
                         type="text"
-                        name="Apartment"
+                        name="apartment"
                         fullWidth
                         placeholder="Apartment"
-                        value={null}
+                        value={userInfo.apartment}
                         onChange={handleChanges}
                     />
                 </Grid>
@@ -132,21 +133,26 @@ const SettingsForm = props => {
                     name="postal"
                     fullWidth
                     placeholder="Postal Code"
-                    value={null}
+                    value={userInfo.postal}
                     onChange={handleChanges}
                 />
                 
                 </Grid>
             </Grid>
+            <Button variant="contained" color="primary" size="large"
+                    // onClick={() => props.updateUser(userInfo, also needs id, props.history)}                   }
+                    >
+                Save
+            </Button>
     </Fragment>
     )
 }
 
 const mapStateToProps = ({ error }) => ({
-    error
+    // error
   });
   
-  export default connect(mapStateToProps, {})(
+  export default connect(mapStateToProps, {updateUser})(
     SettingsForm
   );
   

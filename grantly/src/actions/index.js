@@ -40,8 +40,15 @@ import {
   SELECT_FAVORITE,
   DELETE_FAVORITE_START,
   DELETE_FAVORITE_SUCCESS,
-  DELETE_FAVORITE_FAILURE
+  DELETE_FAVORITE_FAILURE,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_START,
+  UPDATE_USER_FAILURE,
+  DELETE_USER_START,
+  DELETE_USER_SUCCESS,
+  DELETE_USER_FAILURE
 } from "./types";
+import { connect } from "react-redux";
 
 // fetch grants for main view
 export const fetchApi = () => dispatch => {
@@ -296,3 +303,31 @@ export const deleteFavorite = (requestId, user) => dispatch => {
       dispatch({ type: DELETE_FAVORITE_FAILURE });
     });
 };
+
+export const updateUser = (user_data, user, requestId, history) => (dispatch) => {
+  dispatch({type: UPDATE_USER_START })
+  axiosWithAuth(user.token)
+    .put(`${process.env.REACT_APP_CLIENT_BASEURL}/user/${requestId}`,user_data)
+    .then(res => {
+      console.log(res)
+      dispatch({ type: UPDATE_USER_SUCCESS})
+      history.push('/dashboard')
+    })
+    .catch(err => {
+      dispatch({ type: UPDATE_USER_FAILURE });
+    })
+}
+
+export const deleteUser = (user, requestId, history) => (dispatch) => {
+  dispatch({ type: DELETE_USER_START })
+  axiosWithAuth(user.token)
+    .delete(`${process.env.REACT_APP_CLIENT_BASEURL}/user/${requestId}`)
+    .then(res => {
+        console.log(res)
+        dispatch({ type: DELETE_USER_SUCCESS})
+        history.push('/')
+    })
+    .catch(err => {
+      dispatch({ type: DELETE_USER_FAILURE });
+    })
+}
