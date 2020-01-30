@@ -11,7 +11,7 @@ export const sitemapStyles = makeStyles(theme => ({
     minHeight: "6em",
     maxHeight: "8em",
     display: "block",
-    position: "absolute",
+    //position: "absolute",
     verticalAlign: "middle",
     bottom: 0,
     letterSpacing: "1px",
