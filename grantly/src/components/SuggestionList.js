@@ -10,7 +10,7 @@ import { adminStyles } from "../styles/adminStyles";
 export const SuggestionList = props => {
   const styles = adminStyles();
   if (props.isFetching || !props.data.requests) {
-    return null
+    return null;
   }
 
   return (
@@ -34,7 +34,4 @@ const mapStateToProps = state => {
     data: state.grantShowcase
   };
 };
-export default connect(
-  mapStateToProps,
-  { adminFetchApi }
-)(SuggestionList);
+export default connect(mapStateToProps, { adminFetchApi })(SuggestionList);
