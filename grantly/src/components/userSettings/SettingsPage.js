@@ -10,6 +10,9 @@ import SettingsForm from './SettingsForm'
 import SettingsCard from './SettingsCard'
 
 import formStyles from "../../styles/formStyles"
+import PasswordModal from './ChangePasswordModal';
+import ContactModal from './ChangeContactModal'
+import DeleteModal from './DeleteAccountUser'
 
 const SettingsPage = props => {
     const styles = formStyles();
@@ -27,19 +30,19 @@ const SettingsPage = props => {
 
         <Grid container spacing={1} className={styles.bottomBox}>
         <Grid item xs={4}>
-            <Link>
-                Change Password
-            </Link>
+            
+                <PasswordModal />
+            
         </Grid>
         <Grid item xs={4}>
-            <Link>
-                Change Contact Info
-            </Link>
+            
+                <ContactModal />
+
         </Grid>
         <Grid item xs={4}>
-            <Link>
-                Delete Account
-            </Link>
+            
+                <DeleteModal />
+    
         </Grid>
         </Grid>
         
